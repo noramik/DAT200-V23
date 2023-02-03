@@ -33,7 +33,40 @@ versicolor = data[data['types'] == 'Iris-versicolor']
 # Count how many of each type
 print(f'Number of: Virginica = {len(virginica)}, Setosa = {len(setosa)}, Versicolor = {len(versicolor)}')
 
+# View 10 last rows of sepal length and type
+last_rows = data[['sepal length', 'types']]
+last_rows = last_rows.iloc[-10:]
+
+# View rows where sepal length > 5 and petal width < 0.2
+cond_rows = data[(data['sepal length'] > 5) & (data['petal width'] < 0.2)]
 
 
+# Make a new dataframe containing only the rows where petal width = 1.8
+new_df = data[data['petal width'] == 1.8]
 
 
+# Get descriptive stats for the whole dataframe and afterward for col petal length
+stats_data = data.describe()
+
+stats_petal_len = data['petal length'].describe()
+
+
+# Remove rows named flower 55 and flower 77
+data.drop(['flower55', 'flower77'], inplace=True)
+
+# Remove col sepal width >= 3
+data.drop('sepal width >=3', axis=1, inplace=True)
+
+# View all rows of sepal length where petal width is exactly 1.8
+spec = data['sepal length'].where(data['petal width'] == 1.8)
+spec.dropna(inplace=True)
+
+# Get vals of df stored in np array (in practice remove cols and rows)
+df = data[:].values
+
+# Remove col types and apply func name computation to each cell in data. Func should do
+# the following: take val of cell, add 1 and multiply by 3.
+data.drop('types', axis=1, inplace=True)
+data = data.applymap(lambda x: (x+1)*3)
+
+print(data)
